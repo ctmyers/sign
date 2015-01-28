@@ -1,5 +1,6 @@
 from config import config
 
+
 class Interface(object):
     def __init__(self, ip=config.ip, port=config.port):
         self.ip = ip

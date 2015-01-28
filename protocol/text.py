@@ -7,13 +7,30 @@ PRIORITY = '\x30'
 
 
 class Text(object):
-    def __init__(self, message, label='A', position=positions.MIDDLE,
-                 mode=modes.HOLD, locked=True):
-        self.message = message
+    def __init__(self, messages, label='A', locked=True):
+        self.messages = messages
         self.label = label
-        self.size = max(1, min(len(message), 125))
-        self.position = position
-        self.mode = modes
+
+        if type(messages) == Message:
+            self.message = messages.data
+        elif type(messages) == str:
+            self.message = Message(messages).data
+        else:
+            self.message = ''.join(m.data if type(m) == Message
+                                   else Message(m).data
+                                   for m in messages)
+
+        self.size = max(1, min(len(self.message), 125))
         self.locked = control.LOCKED if locked else control.UNLOCKED
-        self.command = Command("%s%s%s%s%s%s" % (control.WRITE_TEXT, label,
-                                                 control.ESC, position, mode, message))
+        self.command = Command("%s%s%s" % (control.WRITE_TEXT,
+                                           self.label, self.message))
+
+
+class Message(object):
+    def __init__(self, message, position=positions.MIDDLE, mode=modes.HOLD):
+        self.message = message
+        self.position = position
+        self.mode = mode
+
+        self.data = '%s%s%s%s' % (control.ESC, self.position,
+                                  self.mode, self.message)
