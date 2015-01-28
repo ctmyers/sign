@@ -28,7 +28,7 @@ class Config(object):
         for line in lines:
             line = line.strip()
 
-            comment = line.find('#')
+            comment = line.find('//')
             if comment > -1:
                 line = line[:comment]
 
