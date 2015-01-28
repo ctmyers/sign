@@ -1,0 +1,6 @@
+MIDDLE = '\x20'
+TOP = '\x22'
+BOTTOM = '\x26'
+FILL = '\x30'
+LEFT = '\x31'
+RIGHT = '\x32'
