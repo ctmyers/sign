@@ -28,7 +28,7 @@ class Config(object):
         for line in lines:
             line = line.strip()
 
-            comment = line.find('//')
+            comment = line.find('#')
             if comment > -1:
                 line = line[:comment]
 
@@ -52,11 +52,11 @@ class Config(object):
             return config_file.readlines()
 
 
-config_path = 'config.json'
+config_path = 'config.rc'
 if not os.path.exists(config_path):
-    config_path = os.path.join(os.path.dirname(os.path.realpath(sys.argv[0])), 'config.json')
+    config_path = os.path.join(os.path.dirname(os.path.realpath(sys.argv[0])), 'config.rc')
 if not os.path.exists(config_path):
-    config_path = os.path.join(os.path.dirname(os.path.realpath(sys.argv[0])), '../config.json')
+    config_path = os.path.join(os.path.dirname(os.path.realpath(sys.argv[0])), '../config.rc')
 if not os.path.exists(config_path):
     raise IOError('Could not find config file')
 
