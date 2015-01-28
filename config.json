@@ -1,0 +1,16 @@
+{
+  # Network address of sign, must be defined
+  "ip": "192.168.1.30",
+  "port": 3001,
+
+  # Sign Typecode (p. 10, Table 5)
+  # Z corresponds to all signs
+  # defaults to Z
+  "typecode": "Z",
+
+  # Sign Address
+  # 00 corresponds to all signs
+  # ? is a wildcard, 0? corresponds to addresses 01 through 0F
+  # defaults to 00
+  "address": "00"
+}
