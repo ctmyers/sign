@@ -1,6 +1,7 @@
 from command import Command
 from text import Text
 from string import String
+from dots import Dots
 import control
 
 
@@ -11,15 +12,22 @@ class MemoryConfig(object):
                 for f in files:
                     if type(f) == Text:
                         file_type = 'A'
+                        size = "%04X" % f.size
                         extra = 'FFFF'
                     elif type(f) == String:
                         file_type = 'A'
+                        size = "%04X" % f.size
                         extra = '0000'
+                    elif type(f) == Dots:
+                        file_type = 'D'
+                        size = '%02X%02X' % (f.height, f.width)
+                        extra = '2000'
                     else:
-                        # dots
-                        raise ValueError('unsupported file type')
-                    contents_list.append('%s%s%s%s%s' % (f.label, file_type,
-                                                         f.locked, f.size,
+                        raise TypeError('invalid file type')
+                    contents_list.append('%s%s%s%s%s' % (f.label,
+                                                         file_type,
+                                                         f.locked,
+                                                         size,
                                                          extra))
                 contents = ''.join(contents_list)
             else:

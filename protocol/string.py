@@ -10,3 +10,7 @@ class String(object):
         self.locked = control.LOCKED if locked else control.UNLOCKED
         self.command = Command("%s%s%s" % (control.WRITE_STRING, label,
                                            message))
+
+    @staticmethod
+    def call(label):
+        return control.CALL_STRING + label
