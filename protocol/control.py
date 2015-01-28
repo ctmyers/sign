@@ -15,6 +15,9 @@ SPEED_5 = '\x19'
 
 ESC = '\x1B'
 
+LOCKED = 'L'
+UNLOCKED = 'U'
+
 WRITE_TEXT = 'A'
 READ_TEXT = 'B'
 WRITE_SPECIAL = 'E'

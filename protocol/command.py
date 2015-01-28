@@ -7,4 +7,3 @@ class Command(object):
         self.data = "%s%s%s%s%s%s%s" % (control.NUL * 5, control.SOH,
                                         typecode, address, control.STX,
                                         data, control.ETX)
-
