@@ -6,7 +6,6 @@ import control
 
 class MemoryConfig(object):
         def __init__(self, files=None):
-
             if files:
                 contents_list = []
                 for f in files:
@@ -27,3 +26,12 @@ class MemoryConfig(object):
                 contents = ''
 
             self.command = Command("%s%s%s" % (control.WRITE_SPECIAL, '$', contents))
+
+
+class RunSequence(object):
+    def __init__(self, files=None, locked=True):
+        order = 'T'
+        locked = control.LOCKED if locked else control.UNLOCKED
+        contents = ''.join([f.label for f in files])
+        self.command = Command('%s%s%s%s%s' % (control.WRITE_SPECIAL, '.',
+                                               order, locked, contents))
