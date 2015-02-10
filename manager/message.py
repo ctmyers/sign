@@ -1,4 +1,5 @@
-from Queue import Queue
+from protocol.text import Text
+import protocol.control as control
 
 
 class Message(object):
@@ -11,7 +12,14 @@ class Message(object):
         self.labels_string = ()
         self.labels_dots = ()
 
-        self.messages = Queue()
+    def command_text(self):
+        cmd = self.text
+        for s in self.labels_string:
+            cmd = cmd.replace('%s', control.CALL_STRING + s, 1)
+        for d in self.labels_dots:
+            cmd = cmd.replace('%d', control.CALL_SMALL_DOTS + d, 1)
+
+        return Text(cmd, self.label).command
 
     def set_labels(self, text, strings, dots):
         self.label = text

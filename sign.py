@@ -39,6 +39,7 @@ gggg    ggg   gggggggggg  ggggg"""
 # sign.send(Dots(d).command)
 
 # time.sleep(6)
-# sign.send(Text([Message('ayy', positions.TOP, modes.HOLD),
-#                 Message('rofl', positions.BOTTOM, modes.COMPRESSED_ROTATE),
-#                 Message(Dots.call('A'))]).command)
+
+sign.send(Text([Message('ayy', positions.TOP, modes.HOLD),
+                Message('rofl', positions.BOTTOM, modes.COMPRESSED_ROTATE),
+                Message(Dots.call('A'))]).command)

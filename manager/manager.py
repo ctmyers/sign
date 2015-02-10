@@ -1,12 +1,15 @@
+from Queue import Queue
 from yapsy.PluginManager import PluginManager
 import schedule
 
 
 class Manager(object):
     def __init__(self):
-        self.al_text = [chr(x) for x in range(0x20, 0x7F) if x not in [0x30]]
+        self.al_text   = [chr(x) for x in range(0x20, 0x7F) if x not in [0x30]]
         self.al_string = [chr(x) for x in range(0x20, 0x7F) if x not in [0x30, 0x3F]]
-        self.al_dots = [chr(x) for x in range(0x20, 0x7F)]
+        self.al_dots   = [chr(x) for x in range(0x20, 0x7F)]
+
+        self.command_queue = Queue()
 
         plugin_manager = PluginManager()
         plugin_manager.setPluginPlaces(['../plugins', './plugins'])
@@ -17,8 +20,7 @@ class Manager(object):
             plugin = p.plugin_object
             self.allocate(plugin)
 
-            print plugin.string_count()
-            print plugin.dots_count()
+            self.command_queue.put(plugin.command_text())
 
     def allocate(self, plugin):
 
