@@ -8,10 +8,14 @@ from protocol.dots import Dots
 import protocol.positions as positions
 import protocol.modes as modes
 
+from manager.manager import Manager
+
 import time
 
 
 sign = NetworkInterface()
+
+manager = Manager()
 
 # sign.send(MemoryConfig([dots]).command)
 # time.sleep(6)
@@ -32,9 +36,9 @@ goooo   goog  goooggggoo   ooogggooo
 oooo   gooo   oooooooooo  ooooo
 gggg    ggg   gggggggggg  ggggg"""
 
-sign.send(Dots(d).command)
+# sign.send(Dots(d).command)
 
 # time.sleep(6)
 # sign.send(Text([Message('ayy', positions.TOP, modes.HOLD),
-#                 Message('lmao', positions.BOTTOM, modes.COMPRESSED_ROTATE),
+#                 Message('rofl', positions.BOTTOM, modes.COMPRESSED_ROTATE),
 #                 Message(Dots.call('A'))]).command)
