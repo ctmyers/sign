@@ -12,11 +12,11 @@ class MemoryConfig(object):
                 for f in files:
                     if type(f) == Text:
                         file_type = 'A'
-                        size = "%04X" % f.size
+                        size = '%04X' % f.size
                         extra = 'FFFF'
                     elif type(f) == String:
                         file_type = 'A'
-                        size = "%04X" % f.size
+                        size = '%04X' % f.size
                         extra = '0000'
                     elif type(f) == Dots:
                         file_type = 'D'

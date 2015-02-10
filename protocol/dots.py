@@ -3,12 +3,29 @@ import control
 
 
 class Dots(object):
-    def __init__(self, dots, label='A', locked=True):
+
+    OFF = '0'
+    RED = '1'
+    GREEN = '2'
+    ORANGE = '3'
+    colors = {' ': OFF, 'r': RED, 'g': GREEN, 'o': ORANGE}
+
+    def __init__(self, dots, label='A', locked=True, width=None, height=None):
         self.dots = dots
         self.label = label
         self.locked = locked
-        self.height = len(dots)
-        self.width = len(dots[0])
+
+        if type(dots) == str:
+            dots = dots.split('\n')
+
+        self.height = height if height else len(dots)
+        if width:
+            self.width = width
+        else:
+            m = 0
+            for row in dots:
+                m = max(0, len(row))
+            self.width = m
 
         data = []
         for row in dots:
@@ -16,6 +33,8 @@ class Dots(object):
                 raise ValueError('malformed dot matrix')
 
             for dot in row:
+                if dot in Dots.colors:
+                    dot = Dots.colors[dot]
                 data.append(str(dot))
 
             data.append(control.NEW_LINE)
