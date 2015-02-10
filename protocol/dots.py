@@ -7,8 +7,9 @@ class Dots(object):
     OFF = '0'
     RED = '1'
     GREEN = '2'
-    ORANGE = '3'
-    colors = {' ': OFF, 'r': RED, 'g': GREEN, 'o': ORANGE}
+    AMBER = '3'
+
+    colors = {' ': OFF, 'r': RED, 'g': GREEN, 'a': AMBER, 'o': AMBER}
 
     def __init__(self, dots, label='A', locked=True, width=None, height=None):
         self.dots = dots
@@ -22,20 +23,19 @@ class Dots(object):
         if width:
             self.width = width
         else:
-            m = 0
+            self.width = 0
             for row in dots:
-                m = max(0, len(row))
-            self.width = m
+                self.width = max(self.width, len(row))
 
         data = []
         for row in dots:
-            if len(row) != self.width:
-                raise ValueError('malformed dot matrix')
-
             for dot in row:
                 if dot in Dots.colors:
                     dot = Dots.colors[dot]
                 data.append(str(dot))
+            
+            while len(data) < self.width:
+                data.append(Dots.OFF)
 
             data.append(control.NEW_LINE)
         data = ''.join(data)
