@@ -9,7 +9,7 @@ class Test(IPlugin, Message):
     def __init__(self):
         IPlugin.__init__(self)
         Message.__init__(self)
-        self.text = '<red>|%s| <amber>|%s| <green>|%s|'
+        self.text = '<red>|%s| <amber>[%s] <green>|%s|'
         self.schedule = schedule.every(10).seconds
 
     def update(self):

@@ -1,4 +1,6 @@
 from protocol.text import Text
+from protocol.string import String
+from protocol.dots import Dots
 import protocol.control as control
 
 
@@ -15,9 +17,9 @@ class Message(object):
     def command_text(self):
         cmd = self.text
         for s in self.labels_string:
-            cmd = cmd.replace('%s', control.CALL_STRING + s, 1)
+            cmd = cmd.replace('%s', String.call(s), 1)
         for d in self.labels_dots:
-            cmd = cmd.replace('%d', control.CALL_SMALL_DOTS + d, 1)
+            cmd = cmd.replace('%d', Dots.call(d), 1)
 
         return Text(cmd, self.label).command
 
@@ -36,7 +38,22 @@ class Message(object):
         return self.text.count("%d")
 
     def dots_sizes(self):
-        return ((16, 16),) * self.dots_count()
+        return ({'width': 80, 'height': 16},) * self.dots_count()
+
+    def to_config(self):
+        t = [Text(messages=self.text, label=self.label)]
+
+        s = [String('', self.labels_string[i],
+                    self.string_lengths()[i])
+             for i in range(self.string_count())]
+
+        d = [Dots('', label=self.labels_dots[i],
+                  width=self.dots_sizes()[i]['width'],
+                  height=self.dots_sizes()[i]['height'])
+             for i in range(self.dots_count())]
+
+        return t + s + d
+
 
     def update(self):
         pass
