@@ -15,7 +15,7 @@ class MemoryConfig(object):
                         size = '%04X' % f.size
                         extra = 'FFFF'
                     elif type(f) == String:
-                        file_type = 'A'
+                        file_type = 'B'
                         size = '%04X' % f.size
                         extra = '0000'
                     elif type(f) == Dots:
