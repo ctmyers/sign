@@ -37,4 +37,5 @@ class NetworkInterface(Interface):
             self.connect()
 
     def __del__(self):
-        self.sock.close()
+        if self.sock:
+            self.sock.close()

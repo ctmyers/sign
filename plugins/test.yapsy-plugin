@@ -1,3 +1,6 @@
 [Core]
-Name = test
+Name = Test
 Module = test
+
+[Documentation]
+Description = Simple test plugin

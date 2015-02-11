@@ -5,15 +5,15 @@ from protocol.string import String
 from protocol.dots import Dots
 
 import schedule
-import random
 
 
 class Test(IPlugin, Message):
     def __init__(self):
         IPlugin.__init__(self)
         Message.__init__(self)
+
         self.text = '<red>|%s| <amber>[%s] <green>|%s| %d'
-        self.schedule = schedule.every(5).seconds
+        self.schedule = schedule.every(1).minutes
 
     def get_commands(self):
         return [String('1', self.labels_string[0]),

@@ -24,6 +24,7 @@ class Manager(object):
 
         plugins = plugin_manager.getAllPlugins()
         for p in plugins:
+            print 'loaded plugin ' + p.name
             plugin = p.plugin_object
             self.allocate_labels(plugin)
 
@@ -31,31 +32,9 @@ class Manager(object):
             plugin.schedule.do(self.update, plugin)
 
             self.command_queue.put(plugin.text_command())
+            self.update(plugin)
 
         interface.send(MemoryConfig(configs))
-
-    def update(self, plugin):
-        def get_commands():
-            for c in plugin.get_commands():
-                self.command_queue.put(c)
-
-        thread = Thread(target=get_commands)
-        thread.start()
-
-    def run(self):
-        s = Thread(target=self.send_commands)
-        s.daemon = True
-        s.start()
-
-        while True:
-            schedule.run_pending()
-            time.sleep(1)
-
-    def send_commands(self):
-        while True:
-            if not self.command_queue.empty():
-                self.interface.send(self.command_queue.get())
-            time.sleep(1)
 
     def allocate_labels(self, plugin):
 
@@ -68,3 +47,26 @@ class Manager(object):
                           get_labels(self.al_string, plugin.string_count()),
                           get_labels(self.al_dots, plugin.dots_count()))
 
+    def update(self, plugin):
+        def get_commands():
+            for c in plugin.get_commands():
+                self.command_queue.put(c)
+
+        thread = Thread(target=get_commands)
+        thread.start()
+
+    def send_commands(self):
+        while True:
+            if not self.command_queue.empty():
+                self.interface.send(self.command_queue.get())
+            else:
+                time.sleep(1)
+
+    def run(self):
+        s = Thread(target=self.send_commands)
+        s.daemon = True
+        s.start()
+
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
