@@ -14,14 +14,17 @@ class Message(object):
         self.labels_string = ()
         self.labels_dots = ()
 
-    def command_text(self):
+    def text_command(self):
         cmd = self.text
         for s in self.labels_string:
             cmd = cmd.replace('%s', String.call(s), 1)
         for d in self.labels_dots:
             cmd = cmd.replace('%d', Dots.call(d), 1)
-
         return Text(cmd, self.label).command
+
+    def get_commands(self):
+        """ Returns a list of string and dots commands that will be sent """
+        return []
 
     def set_labels(self, text, strings, dots):
         self.label = text
@@ -53,7 +56,3 @@ class Message(object):
              for i in range(self.dots_count())]
 
         return t + s + d
-
-
-    def update(self):
-        pass

@@ -14,7 +14,7 @@ class Dots(object):
     def __init__(self, dots, label='A', locked=True, width=None, height=None):
         self.dots = dots
         self.label = label
-        self.locked = locked
+        self.locked = control.LOCKED if locked else control.UNLOCKED
 
         if type(dots) == str:
             dots = dots.split('\n')
