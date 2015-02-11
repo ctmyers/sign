@@ -1,0 +1,7 @@
+[Core]
+Name = Weather
+Module = weather
+
+[Documentation]
+Author = Carson
+Description = displays weather
