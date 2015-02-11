@@ -20,7 +20,7 @@ class Message(object):
             cmd = cmd.replace('%s', String.call(s), 1)
         for d in self.labels_dots:
             cmd = cmd.replace('%d', Dots.call(d), 1)
-        return Text(cmd, self.label).command
+        return Text(cmd, self.label)
 
     def get_commands(self):
         """ Returns a list of string and dots commands that will be sent """

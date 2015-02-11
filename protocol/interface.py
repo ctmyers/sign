@@ -31,7 +31,8 @@ class NetworkInterface(Interface):
             self.connect()
 
         try:
-            self.sock.sendall(command.data)
+            # print command
+            self.sock.sendall(command.data())
         except socket.error:
             self.connect()
 

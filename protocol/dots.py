@@ -2,7 +2,7 @@ from command import Command
 import control
 
 
-class Dots(object):
+class Dots(Command):
 
     OFF = '0'
     RED = '1'
@@ -12,6 +12,8 @@ class Dots(object):
     colors = {' ': OFF, 'r': RED, 'g': GREEN, 'a': AMBER, 'o': AMBER}
 
     def __init__(self, dots, label='A', locked=True, width=None, height=None):
+        Command.__init__(self)
+
         self.dots = dots
         self.label = label
         self.locked = control.LOCKED if locked else control.UNLOCKED
@@ -40,9 +42,9 @@ class Dots(object):
             data.append(control.NEW_LINE)
         data = ''.join(data)
 
-        self.command = Command("%s%s%s%s%s" % (control.WRITE_SMALL_DOTS, label,
-                                               "%02X" % self.height,
-                                               "%02X" % self.width, data))
+        self._command = "%s%s%s%s%s" % (control.WRITE_SMALL_DOTS, label,
+                                        "%02X" % self.height,
+                                        "%02X" % self.width, data)
 
     @staticmethod
     def call(label):

@@ -6,8 +6,10 @@ import modes
 PRIORITY = '\x30'
 
 
-class Text(object):
+class Text(Command):
     def __init__(self, messages, label='A', locked=True):
+        Command.__init__(self)
+
         self.messages = messages
         self.label = label
 
@@ -22,8 +24,8 @@ class Text(object):
 
         self.size = max(1, min(len(self.message), 125))
         self.locked = control.LOCKED if locked else control.UNLOCKED
-        self.command = Command("%s%s%s" % (control.WRITE_TEXT,
-                                           self.label, self.message))
+        self._command = "%s%s%s" % (control.WRITE_TEXT,
+                                    self.label, self.message)
 
 
 class Message(object):

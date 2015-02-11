@@ -43,8 +43,8 @@ msgs.append(Text([Message('heyy', positions.TOP, modes.HOLD),
 
 msgs.append(Dots(d, label='D'))
 
-sign.send(MemoryConfig(msgs).command)
+sign.send(MemoryConfig(msgs))
 
 for m in msgs:
-    sign.send(m.command)
+    sign.send(m)
 """

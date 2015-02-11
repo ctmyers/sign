@@ -32,7 +32,7 @@ class Manager(object):
 
             self.command_queue.put(plugin.text_command())
 
-        interface.send(MemoryConfig(configs).command)
+        interface.send(MemoryConfig(configs))
 
     def update(self, plugin):
         def get_commands():

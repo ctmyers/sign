@@ -16,8 +16,8 @@ class Test(IPlugin, Message):
         self.schedule = schedule.every(5).seconds
 
     def get_commands(self):
-        return [String('1', self.labels_string[0]).command,
-                String('2', self.labels_string[1]).command,
-                String('3', self.labels_string[2]).command,
-                Dots('111\n222\n333', self.labels_dots[0]).command]
+        return [String('1', self.labels_string[0]),
+                String('2', self.labels_string[1]),
+                String('3', self.labels_string[2]),
+                Dots('111\n222\n333', self.labels_dots[0])]
 
