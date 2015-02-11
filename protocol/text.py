@@ -13,13 +13,13 @@ class Text(Command):
         self.messages = messages
         self.label = label
 
-        if type(messages) == Message:
-            self.message = messages.data
+        if type(messages) == Page:
+            self.message = messages.content
         elif type(messages) == str:
-            self.message = Message(messages).data
+            self.message = Page(messages).content
         else:
-            self.message = ''.join(m.data if type(m) == Message
-                                   else Message(m).data
+            self.message = ''.join(m.content if type(m) == Page
+                                   else Page(m).content
                                    for m in messages)
 
         self.size = max(1, min(len(self.message), 125))
@@ -28,11 +28,11 @@ class Text(Command):
                                     self.label, self.message)
 
 
-class Message(object):
+class Page(object):
     def __init__(self, message, position=positions.MIDDLE, mode=modes.HOLD):
         self.message = message
         self.position = position
         self.mode = mode
 
-        self.data = '%s%s%s%s' % (control.ESC, self.position,
-                                  self.mode, self.message)
+        self.content = '%s%s%s%s' % (control.ESC, self.position,
+                                     self.mode, self.message)
