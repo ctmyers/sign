@@ -17,7 +17,7 @@ class Weather(IPlugin, Message):
         Message.__init__(self)
 
         self.text = control.SPEED_1 + '%s' + control.NEW_PAGE + '%s'
-        self.schedule = schedule.every(1).minutes
+        self.schedule = schedule.every(1).hours
         self.location = '20740'
         self.lat = '39.003'
         self.lon = '-76.935'
