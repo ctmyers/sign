@@ -58,10 +58,3 @@ class Weather(IPlugin, Message):
 
         return [String('%s' % weather['temp'], self.labels_string[0]),
                 String('rain: %s' % precip['morning'], self.labels_string[1])]
-
-def main():
-    weather = Weather()
-    weather.get_weather()
-
-if __name__ == "__main__":
-    main()
