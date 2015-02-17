@@ -4,6 +4,8 @@ from manager.message import Message
 from protocol.string import String
 from protocol.dots import Dots
 
+import protocol.positions as positions
+
 import schedule
 
 
@@ -12,8 +14,10 @@ class Test(IPlugin, Message):
         IPlugin.__init__(self)
         Message.__init__(self)
 
-        self.text = '<red>|%s| <amber>[%s] <green>|%s| %d'
+        self.text = '%d'
         self.schedule = schedule.every(1).minutes
+
+        self.position = positions.MIDDLE
 
     def get_commands(self):
         d = """ooooo   oooo  oooooooooo  ooooooooo    ooooooooo    ooooo   oooo  o
@@ -32,8 +36,5 @@ goooo   goog  goooggggoo   ooogggooo    ooogggooo   gooog   goog  oo
 oooo   gooo   oooooooooo  ooooo        ooooo          goooooog           ggggggg
 gggg    ggg   gggggggggg  ggggg        ggggg           gggggg             gggggg"""
 
-        return [String('1', self.labels_string[0]),
-                String('2', self.labels_string[1]),
-                String('3', self.labels_string[2]),
-                Dots(d, self.labels_dots[0])]
+        return (Dots(d, self.labels_dots[0]), )
 

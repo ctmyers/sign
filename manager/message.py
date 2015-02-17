@@ -1,11 +1,12 @@
-from protocol.text import Text
+from protocol.text import Text, Page
 from protocol.string import String
 from protocol.dots import Dots
-import protocol.control as control
+
+import protocol.positions as positions
+import protocol.modes as modes
 
 
 class Message(object):
-
     def __init__(self):
         self.text = None
         self.schedule = None
@@ -14,13 +15,16 @@ class Message(object):
         self.labels_string = ()
         self.labels_dots = ()
 
+        self.position = positions.FILL
+        self.mode = modes.HOLD
+
     def text_command(self):
         cmd = self.text
         for s in self.labels_string:
             cmd = cmd.replace('%s', String.call(s), 1)
         for d in self.labels_dots:
             cmd = cmd.replace('%d', Dots.call(d), 1)
-        return Text(cmd, self.label)
+        return Text(Page(cmd, self.position, self.mode), self.label)
 
     def get_commands(self):
         """ Returns a list of string and dots commands that will be sent """

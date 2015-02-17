@@ -29,7 +29,7 @@ class Text(Command):
 
 
 class Page(object):
-    def __init__(self, message, position=positions.MIDDLE, mode=modes.HOLD):
+    def __init__(self, message, position=positions.FILL, mode=modes.HOLD):
         self.message = message
         self.position = position
         self.mode = mode
