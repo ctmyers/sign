@@ -1,10 +1,16 @@
 from Queue import Queue
 from yapsy.PluginManager import PluginManager
 from protocol.special import MemoryConfig
+from datetime import datetime
 
 import time
 from threading import Thread
 import schedule
+
+
+def log(string):
+    n = datetime.now()
+    print '[%02d:%02d:%02d] %s' % (n.hour, n.minute, n.second, string)
 
 
 class Manager(object):
@@ -24,15 +30,14 @@ class Manager(object):
 
         plugins = plugin_manager.getAllPlugins()
         for p in plugins:
-            print 'loaded plugin ' + p.name
-            plugin = p.plugin_object
-            self.allocate_labels(plugin)
+            log('loaded plugin %s' % p.name)
+            self.allocate_labels(p.plugin_object)
 
-            configs += plugin.to_config()
-            plugin.schedule.do(self.update, plugin)
+            configs += p.plugin_object.to_config()
+            p.plugin_object.schedule.do(self.update, p)
 
-            self.command_queue.put(plugin.text_command())
-            self.update(plugin)
+            self.command_queue.put(p.plugin_object.text_command())
+            self.update(p)
 
         interface.send(MemoryConfig(configs))
 
@@ -49,9 +54,10 @@ class Manager(object):
 
     def update(self, plugin):
         def get_commands():
-            for c in plugin.get_commands():
+            for c in plugin.plugin_object.get_commands():
                 self.command_queue.put(c)
 
+        log('updating %s' % plugin.name)
         thread = Thread(target=get_commands)
         thread.start()
 
