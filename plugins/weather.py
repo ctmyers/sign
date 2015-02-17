@@ -9,7 +9,7 @@ import json
 import time
 import urllib
 import schedule
-
+import forecastio
 
 class Weather(IPlugin, Message):
     def __init__(self):
@@ -18,34 +18,28 @@ class Weather(IPlugin, Message):
 
         self.text = control.SPEED_1 + '%s' + control.NEW_PAGE + '%s'
         self.schedule = schedule.every(1).hours
-        self.location = '20740'
-        self.lat = '39.003'
-        self.lon = '-76.935'
+        self.lat = '38.9901'
+        self.lon = '-76.9319'
+        self.API_KEY = open('key.txt','r').read()
 
     def get_weather(self):
-        url = 'https://query.yahooapis.com/v1/public/yql?q=' \
-              'select * from weather.forecast where woeid in ' \
-              '(select woeid from geo.places(1) where text="%s")&format=json' % self.location
+        forecast = forecastio.load_forecast(self.API_KEY, self.lat, self.lon)
 
-        data = json.loads(urllib.urlopen(url).read())
-        data = data['query']['results']['channel']
-        today, tomorrow = {}, {}
+        temp = forecast.hourly().data[0].temperature
+        humidity = forecast.daily().data[0].humidity
+        today = forecast.hourly().summary
+        tomorrow = forecast.daily().data[1].summary
+        tomorrow_rain = forecast.daily().data[1].precipProbability
+        tomorrow_temp_max = forecast.daily().data[1].temperatureMax
+        tomorrow_temp_min = forecast.daily().data[1].temperatureMin
+        alert_message = "None"
+        if forecast.alerts() is not None:
+            alerts = forecast.alerts()
+            for alert in alerts:
+                alert_message += " " + alert.title
 
-        units = data['units']['temperature'].encode('ascii', 'ignore')
-
-        temp = data['item']['condition']['temp'].encode('ascii', 'ignore')
-        humidity = data['atmosphere']['humidity'].encode('ascii', 'ignore')
-
-        today['high'] = data['item']['forecast'][0]['high'].encode('ascii', 'ignore')
-        today['low'] = data['item']['forecast'][0]['low'].encode('ascii', 'ignore')
-        today['condition'] = data['item']['forecast'][0]['text'].encode('ascii', 'ignore')
-
-        tomorrow['high'] = data['item']['forecast'][1]['high'].encode('ascii', 'ignore')
-        tomorrow['low'] = data['item']['forecast'][1]['low'].encode('ascii', 'ignore')
-        tomorrow['condition'] = data['item']['forecast'][1]['text'].encode('ascii', 'ignore')
-
-        return {'temp': temp, 'humidity': humidity, 'units': units,
-                'today': today, 'tomorrow': tomorrow}
+        return {'temp': temp, 'humidity': humidity,
+                'today': today, 'tomorrow': tomorrow, 'alerts': alert_message}
 
     def get_precipitation(self):
         url = 'http://isitgoingtorain.com/data/nearest.php?' \
