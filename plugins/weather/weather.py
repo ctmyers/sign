@@ -19,7 +19,7 @@ class Weather(IPlugin, Message):
         self.schedule = schedule.every(1).hours
         self.lat = '38.9901'
         self.lon = '-76.9319'
-        self.api_key = open('plugins/key.txt', 'r').read().rstrip()
+        self.api_key = open('plugins/weather/key.txt', 'r').read().rstrip()
 
     @staticmethod
     def _convert(value):
