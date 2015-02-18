@@ -56,3 +56,12 @@ class TimeOfDay(Command):
         Command.__init__(self)
         self._command = '%s%s%02d%02d' % (control.WRITE_SPECIAL, ' ',
                                           time.hour, time.minute)
+
+
+class DayOfWeek(Command):
+    def __init__(self, time=datetime.now()):
+        Command.__init__(self)
+        day = time.isoweekday() + 1
+        if day > 7:
+            day -= 7
+        self._command = '%s%s%s' % (control.WRITE_SPECIAL, '&', day)
