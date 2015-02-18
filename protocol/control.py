@@ -10,6 +10,8 @@ NEW_LINE = '\x0D'
 CALL_STRING = '\x10'
 CALL_SMALL_DOTS = '\x14'
 
+CALL_TIME = '\x13'
+
 SPEED_1 = '\x15'
 SPEED_2 = '\x16'
 SPEED_3 = '\x17'
