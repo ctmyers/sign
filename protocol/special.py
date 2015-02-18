@@ -4,6 +4,8 @@ from string import String
 from dots import Dots
 import control
 
+from datetime import datetime
+
 
 class MemoryConfig(Command):
     def __init__(self, files=None):
@@ -47,3 +49,10 @@ class RunSequence(Command):
         contents = ''.join([f.label for f in files])
         self._command = '%s%s%s%s%s' % (control.WRITE_SPECIAL, '.',
                                         order, locked, contents)
+
+
+class TimeOfDay(Command):
+    def __init__(self, time=datetime.now()):
+        Command.__init__(self)
+        self._command = '%s%s%02d%02d' % (control.WRITE_SPECIAL, ' ',
+                                          time.hour, time.minute)
