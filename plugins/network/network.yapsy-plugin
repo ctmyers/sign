@@ -1,0 +1,6 @@
+[Core]
+Name = Network
+Module = network
+
+[Documentation]
+Description = Get data usage from the router
