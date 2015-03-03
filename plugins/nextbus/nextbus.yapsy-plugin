@@ -1,0 +1,7 @@
+[Core]
+Name = NextBus
+Module = nextbus
+
+[Documentation]
+Description = Get bus stop information
+Author = Carson
