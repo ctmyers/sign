@@ -20,7 +20,7 @@ class NextBus(IPlugin, Message):
         Message.__init__(self)
 
         self.text = control.SPEED_1 + '%s'
-        self.schedule = schedule.every(1).hours
+        self.schedule = schedule.every(1).minutes
 
         lines = [line.strip() for line in open('plugins/nextbus/nextbus.config').readlines()]
         config = {}

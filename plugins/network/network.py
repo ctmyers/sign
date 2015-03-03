@@ -30,7 +30,7 @@ class Network(IPlugin, Message):
         Message.__init__(self)
 
         self.text = control.SPEED_1 + '%s' + control.NEW_LINE + '%s'
-        self.schedule = schedule.every(1).minutes
+        self.schedule = schedule.every(1).hours
 
         c = {}
         with open('plugins/network/network.config', 'r') as conf:
