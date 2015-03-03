@@ -1,10 +1,10 @@
 from yapsy.IPlugin import IPlugin
 from manager.message import Message
 
-from protocol.string import String
 from protocol.dots import Dots
 
 import protocol.positions as positions
+import protocol.control as control
 
 import schedule
 
@@ -14,8 +14,8 @@ class Test(IPlugin, Message):
         IPlugin.__init__(self)
         Message.__init__(self)
 
-        self.text = '%d'
-        self.schedule = schedule.every(1).minutes
+        self.text = control.SPEED_1 + '%d'
+        self.schedule = schedule.every(30).minutes
 
         self.position = positions.MIDDLE
 

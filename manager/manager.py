@@ -1,6 +1,6 @@
 from Queue import Queue
 from yapsy.PluginManager import PluginManager
-from protocol.special import MemoryConfig
+from protocol.special import MemoryConfig, RunSequence
 from datetime import datetime
 
 import time
@@ -27,6 +27,7 @@ class Manager(object):
         plugin_manager.collectPlugins()
 
         configs = []
+        sequence = []
 
         plugins = plugin_manager.getAllPlugins()
         for p in plugins:
@@ -36,10 +37,13 @@ class Manager(object):
             configs += p.plugin_object.to_config()
             p.plugin_object.schedule.do(self.update, p)
 
-            self.command_queue.put(p.plugin_object.text_command())
+            text = p.plugin_object.text_command()
+            sequence.append(text)
+            self.command_queue.put(text)
             self.update(p)
 
         interface.send(MemoryConfig(configs))
+        interface.send(RunSequence(sequence))
 
     def allocate_labels(self, plugin):
 

@@ -1,0 +1,6 @@
+[Core]
+Name = Time
+Module = time
+
+[Documentation]
+Description = displays current time
