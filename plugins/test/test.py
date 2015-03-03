@@ -15,7 +15,7 @@ class Test(IPlugin, Message):
         Message.__init__(self)
 
         self.text = control.SPEED_1 + '%d'
-        self.schedule = schedule.every(1).minutes
+        self.schedule = schedule.every(30).minutes
 
         self.position = positions.MIDDLE
 
