@@ -59,11 +59,15 @@ class NextBus(IPlugin, Message):
 
     def get_commands(self):
         w = self.get_schedule()
-        keys = sorted(w.keys())
+        stop_name = w['stop_name']
+        w.pop('stop_name', None)
+        keys = [int(k) for k in w.keys()]
+        keys.sort()
+
         if keys is not None and len(keys) >= 1:
-            return (String("%s %s %s min: %s %s %s min: %s" %
-                           (w['stop_name'], control.NEW_LINE,
-                            keys[0], w[keys[0]], control.NEW_LINE,
-                            keys[1], w[keys[1]]), self.labels_string[0]), )
+            return (String("%s %s %d min: %s %s %d min: %s" %
+                           (stop_name, control.NEW_LINE,
+                            keys[0], w[str(keys[0])], control.NEW_LINE,
+                            keys[1], w[str(keys[1])]), self.labels_string[0]), )
 
         return (String('No stop predictions', self.labels_string[0]), )
