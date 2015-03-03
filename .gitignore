@@ -6,6 +6,7 @@ venv/
 #Sensitive Files#
 #################
 key.txt
+network.config
 
 # OS generated files #
 ######################
